@@ -27,10 +27,16 @@ if (formLogin instanceof HTMLFormElement) {
       })
 
       if (status === 201) {
-        window.location.href = '/profile'
+        window.location.href = '/products'
       } else {
         console.log('[login] estado inesperado: ' + status)
       }
     }
   })
 }
+
+const btnRegistrarme = document.querySelector('#btnRegistrarme')
+  btnRegistrarme.addEventListener('click' , async event => {
+    event.preventDefault()
+    window.location.href = '/register'
+  })

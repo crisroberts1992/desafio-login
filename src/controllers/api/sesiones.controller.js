@@ -9,8 +9,8 @@ export async function postSesiones(req, res, next) {
   if (usuarioEncontrado.password !== req.body.password) {
     return res.sendStatus(401)
   }
-
-  req.session.user = {
+  
+ req.session.user = {
     name: usuarioEncontrado.first_name + ' ' + usuarioEncontrado.last_name,
     email: usuarioEncontrado.email,
     age: usuarioEncontrado.age,

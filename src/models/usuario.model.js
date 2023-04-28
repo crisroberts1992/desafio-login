@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const usuarioSchema = new mongoose.Schema({
+const usuarioSchema = new mongoose.Schema({ //validacion de que se llenen todos los campos del registro
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   first_name: { type: String, required: true },
