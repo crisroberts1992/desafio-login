@@ -1,41 +1,43 @@
-const formRegister = document.querySelector('#formRegister') //busco el #formRegister
+const registerForm = document.getElementById('registerForm')
 
-if (formRegister instanceof HTMLFormElement) { //si lo encuentro
-  formRegister.addEventListener('submit', async event => {
-    event.preventDefault() //para que no recargue la pagina despues de enviar el formulario
+if (registerForm instanceof HTMLFormElement) {
+    registerForm.addEventListener('submit', async e => {
+        e.preventDefault()
 
-    const input_first_name = document.querySelector('#input_first_name') //busco los datos del formulario
-    const input_last_name = document.querySelector('#input_last_name')
-    const input_email = document.querySelector('#input_email')
-    const input_age = document.querySelector('#input_age')
-    const input_password = document.querySelector('#input_password')
+        const input_email = document.querySelector('#email')
+        const input_password = document.querySelector('#password')
+        const input_first_name = document.querySelector('#first_name')
+        const input_last_name = document.querySelector('#last_name')
+        const input_age = document.querySelector('#age')
 
-    if (
-      input_first_name instanceof HTMLInputElement && //si estos datos son input
-      input_last_name instanceof HTMLInputElement &&
-      input_email instanceof HTMLInputElement &&
-      input_age instanceof HTMLInputElement &&
-      input_password instanceof HTMLInputElement
-    ) {
+        if (
+            !(input_email instanceof HTMLInputElement)
+            || !(input_password instanceof HTMLInputElement)
+            || !(input_first_name instanceof HTMLInputElement)
+            || !(input_last_name instanceof HTMLInputElement)
+            || !(input_age instanceof HTMLInputElement)
+        ) return
 
-      const datosUsuario = { //extraigo las respuestas
-        first_name: input_first_name.value,
-        last_name: input_last_name.value,
-        email: input_email.value,
-        age: input_age.value,
-        password: input_password.value,
-      }
+        const data = {
+            email: input_email.value,
+            password: input_password.value,
+            first_name: input_first_name.value,
+            last_name: input_last_name.value,
+            age: input_age.value,
+        }
 
-      const usuarioCreado = await fetch('/api/usuarios', { //fetch para hacer asincronico
-        method: 'POST',                      //esta parte la busco por google
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(datosUsuario)
-      }).then(res => res.json()) //que me devuelva un json
+        const response = await fetch('/api/users', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
 
-      console.log(usuarioCreado)
-    }
-  })
+        if (response.status === 201) {
+            window.location.replace('/')
+        }
+    })
 }
+
+

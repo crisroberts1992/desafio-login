@@ -1,1 +1,1 @@
-export const PORT = 8080
+export const port = 8080

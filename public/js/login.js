@@ -1,42 +1,32 @@
-const formLogin = document.querySelector('#formLogin')
+const loginForm = document.getElementById('loginForm')
 
-if (formLogin instanceof HTMLFormElement) {
-  formLogin.addEventListener('submit', async event => {
-    event.preventDefault()
+if (loginForm instanceof HTMLFormElement) {
+    loginForm.addEventListener('submit', async e => {
+        e.preventDefault()
 
-    const input_email = document.querySelector('#input_email')
-    const input_password = document.querySelector('#input_password')
+        const input_email = document.querySelector('#email')
+        const input_password = document.querySelector('#password')
 
-    if (
-      input_email instanceof HTMLInputElement &&
-      input_password instanceof HTMLInputElement
-    ) {
+        if (
+            !(input_email instanceof HTMLInputElement)
+            || !(input_password instanceof HTMLInputElement)
+        ) return
 
-      const datosUsuario = {
-        email: input_email.value,
-        password: input_password.value,
-      }
+        const data = {
+            email: input_email.value,
+            password: input_password.value,
+        }
 
-      const { status } = await fetch('/api/sesiones', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(datosUsuario)
-      })
+        const response = await fetch('/api/sessions', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
 
-      if (status === 201) {
-        window.location.href = '/products'
-      } else {
-        console.log('[login] estado inesperado: ' + status)
-      }
-    }
-  })
+        if (response.status === 201) {
+            window.location.replace('/')
+        }
+    })
 }
-
-const btnRegistrarme = document.querySelector('#btnRegistrarme')
-  btnRegistrarme.addEventListener('click' , async event => {
-    event.preventDefault()
-    window.location.href = '/register'
-  })
